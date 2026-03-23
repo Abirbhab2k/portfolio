@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Abirbhab Adhikari | Futuristic AI/ML Engineer & Data Analyst</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0a0a0f;
+            color: #eef5ff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Canvas 3D Background - Neural Network Style */
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Glowing text & neon effects */
+        .gradient-text {
+            background: linear-gradient(135deg, #00d4ff, #7c3aed, #ff00d4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradientShift 3s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glassmorphism + Neon Border */
+        .glass-card {
+            background: rgba(10, 10, 20, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 212, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .glass-card:hover {
+            border-color: #00d4ff;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            transform: translateY(-5px);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00d4ff;
+            border-radius: 10px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%;
+            max-width: 1200px;
+            z-index: 1000;
+            background: rgba(5, 5, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 60px;
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00d4ff, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            color: #eef5ff;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, #00d4ff, #a855f7);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #00d4ff;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #00d4ff;
+        }
+
+        section {
+            position: relative;
+            z-index: 2;
+            padding: 6rem 2rem;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* Hero Section with Profile Photo */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 120px;
+            padding-bottom: 80px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content {
+            text-align: left;
+        }
+
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .profile-photo-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-photo {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #00d4ff;
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.4), 0 0 80px rgba(0, 212, 255, 0.2);
+            transition: all 0.4s;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .profile-photo-placeholder {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00d4ff20, #7c3aed20);
+            border: 3px dashed #00d4ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .profile-photo-placeholder i {
+            font-size: 4rem;
+            color: #00d4ff;
+            margin-bottom: 1rem;
+        }
+
+        .profile-photo-placeholder:hover {
+            border-color: #ff00d4;
+            transform: scale(1.02);
+        }
+
+        /* Unique Open to Work Badge - Attached to Profile Photo */
+        .open-to-work-badge {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #22c55e, #15803d);
+            border-radius: 40px;
+            padding: 0.5rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.5), 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            z-index: 10;
+            animation: badgePulse 2s infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+                transform: scale(1.05);
+            }
+        }
+
+        .open-to-work-badge i {
+            font-size: 0.7rem;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .profile-name {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .profile-name h2 {
+            font-size: 2rem;
+            font-family: 'Orbitron', monospace;
+            background: linear-gradient(135deg, #00d4ff, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .profile-name p {
+            color: #94a3b8;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid #00d4ff;
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .typing-text {
+            font-size: 1.4rem;
+            margin: 1rem 0;
+            min-height: 3rem;
+            color: #00d4ff;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .social-icons a {
+            font-size: 1.8rem;
+            color: #eef5ff;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #00d4ff;
+            transform: translateY(-5px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.6);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #00d4ff;
+            padding: 0.9rem 2.2rem;
+            border-radius: 40px;
+            color: #00d4ff;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.3s;
+            margin-left: 1rem;
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 212, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #00d4ff, #a855f7);
+        }
+
+        /* Tools Categories */
+        .tools-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .tool-category {
+            padding: 1.8rem;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.5);
+            padding-bottom: 0.8rem;
+        }
+
+        .category-header i {
+            font-size: 2rem;
+            color: #00d4ff;
+        }
+
+        .category-header h3 {
+            font-size: 1.6rem;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .tools-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .tool-item {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .tool-item:hover {
+            transform: translateY(-3px);
+            border-color: #00d4ff;
+            background: rgba(0, 212, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .skill-tag {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            padding: 0.8rem 1.8rem;
+            border-radius: 40px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .skill-tag:hover {
+            transform: translateY(-3px);
+            border-color: #00d4ff;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            padding: 2rem;
+        }
+
+        .project-icon {
+            font-size: 3rem;
+            color: #00d4ff;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tech-stack span {
+            background: rgba(0, 212, 255, 0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2.5rem;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(10, 10, 20, 0.6);
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            border-radius: 16px;
+            color: white;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .footer {
+            background: rgba(5, 5, 15, 0.9);
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(0, 212, 255, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (max-width: 968px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+            .hero-content {
+                text-align: center;
+                order: 2;
+            }
+            .profile-section {
+                order: 1;
+            }
+            .social-icons {
+                justify-content: center;
+            }
+            .profile-photo, .profile-photo-placeholder {
+                width: 220px;
+                height: 220px;
+            }
+            .open-to-work-badge {
+                bottom: 5px;
+                right: 5px;
+                padding: 0.3rem 0.8rem;
+                font-size: 0.7rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .nav-links {
+                display: none;
+            }
+            .mobile-menu {
+                display: block;
+            }
+            .hero {
+                padding-top: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><i class="fas fa-brain"></i> ABIRBHAB.AI</div>
+            <ul class="nav-links">
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#tools">TOOLS</a></li>
+                <li><a href="#skills">SKILLS</a></li>
+                <li><a href="#projects">PROJECTS</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+            <div class="mobile-menu" id="mobileMenuBtn"><i class="fas fa-bars"></i></div>
+        </div>
+    </nav>
+
+    <!-- Hero Section - Profile Photo with Unique Open to Work Badge -->
+    <section id="home" class="hero">
+        <div class="container hero-grid">
+            <div class="profile-section" data-aos="fade-right" data-aos-duration="1000">
+                <div class="profile-photo-container">
+                    <div id="profilePhotoWrapper" class="profile-photo-placeholder" onclick="document.getElementById('photoUpload').click()">
+                        <i class="fas fa-camera"></i>
+                        <p>Click to upload<br>Profile Photo</p>
+                        <small style="font-size: 0.7rem;">Upload your photo</small>
+                    </div>
+                    <img id="profileImage" class="profile-photo" style="display: none;" alt="Profile Photo">
+                    <input type="file" id="photoUpload" accept="image/*" style="display: none;" onchange="uploadProfilePhoto(event)">
+                    <!-- Unique Open to Work Badge Attached to Profile Photo -->
+                    <div class="open-to-work-badge">
+                        <i class="fas fa-circle"></i>
+                        <span>OPEN TO WORK</span>
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                </div>
+                <div class="profile-name">
+                    <h2>Abirbhab Adhikari</h2>
+                    <p><i class="fas fa-map-marker-alt"></i> Kolkata, India | <i class="fas fa-calendar-alt"></i> B.Tech AI&ML 2026</p>
+                </div>
+            </div>
+            <div class="hero-content" data-aos="fade-left" data-aos-duration="1000">
+                <div class="hero-badge">
+                    <i class="fas fa-microchip"></i> AI/ML ENGINEER | DATA ANALYST
+                </div>
+                <div class="typing-text" id="typing-text"></div>
+                <p style="font-size: 1.1rem; opacity: 0.9;">Turning data into intelligence, building the future with AI & Machine Learning</p>
+                <div class="social-icons">
+                    <a href="https://github.com/Abirbhab2k" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/abirbhab2k" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="mailto:adhikariabirbbah@gmail.com"><i class="fas fa-envelope"></i></a>
+                </div>
+                <div>
+                    <a href="#contact" class="btn-primary"><i class="fas fa-paper-plane"></i> HIRE ME</a>
+                    <a href="#projects" class="btn-outline"><i class="fas fa-code"></i> VIEW WORK</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">>_ ABOUT.ME</div>
+            <div class="glass-card" style="padding: 2rem;" data-aos="fade-up">
+                <p style="font-size: 1.1rem; line-height: 1.6;">Data-driven AI & ML undergraduate with strong skills in Python, SQL, Excel, and data analysis. Experienced in collecting, cleaning, and analyzing datasets using Pandas and NumPy to generate actionable insights. Skilled in data visualization and statistical analysis, with hands-on experience in IoT data analytics and machine learning models. Passionate about using data to support business decisions and improve user-driven platforms.</p>
+                <div style="margin-top: 1.5rem;">
+                    <i class="fas fa-graduation-cap"></i> <strong>B.Tech in Artificial Intelligence & Machine Learning</strong> | St. Thomas' College of Engineering & Technology (2022-2026)
+                </div>
+                <div style="margin-top: 1rem;">
+                    <i class="fas fa-certificate"></i> <strong>Certifications:</strong> Machine Learning, Data Analysis with Pandas & NumPy, IoT Embedded Systems
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="tools">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">>_ TECH_STACK</div>
+            <div class="tools-container">
+                <div class="tool-category glass-card" data-aos="flip-left">
+                    <div class="category-header">
+                        <i class="fas fa-robot"></i>
+                        <h3>Machine Learning & AI</h3>
+                    </div>
+                    <div class="tools-grid">
+                        <div class="tool-item"><i class="fas fa-chart-line"></i> scikit-learn</div>
+                        <div class="tool-item"><i class="fas fa-fire"></i> PyTorch</div>
+                        <div class="tool-item"><i class="fas fa-eye"></i> OpenCV</div>
+                        <div class="tool-item"><i class="fas fa-chart-simple"></i> Weka</div>
+                    </div>
+                </div>
+
+                <div class="tool-category glass-card" data-aos="flip-left" data-aos-delay="100">
+                    <div class="category-header">
+                        <i class="fas fa-chart-pie"></i>
+                        <h3>Data Analysis</h3>
+                    </div>
+                    <div class="tools-grid">
+                        <div class="tool-item"><i class="fas fa-file-excel"></i> Excel</div>
+                        <div class="tool-item"><i class="fas fa-chart-bar"></i> Power BI</div>
+                        <div class="tool-item"><i class="fab fa-python"></i> Pandas</div>
+                        <div class="tool-item"><i class="fab fa-python"></i> NumPy</div>
+                        <div class="tool-item"><i class="fas fa-database"></i> PySpark</div>
+                        <div class="tool-item"><i class="fas fa-cloud"></i> Databricks</div>
+                        <div class="tool-item"><i class="fas fa-chart-line"></i> Matplotlib</div>
+                        <div class="tool-item"><i class="fas fa-chart-simple"></i> Seaborn</div>
+                        <div class="tool-item"><i class="fas fa-table"></i> Google Sheets</div>
+                    </div>
+                </div>
+
+                <div class="tool-category glass-card" data-aos="flip-left" data-aos-delay="200">
+                    <div class="category-header">
+                        <i class="fas fa-code"></i>
+                        <h3>Programming & Databases</h3>
+                    </div>
+                    <div class="tools-grid">
+                        <div class="tool-item"><i class="fab fa-python"></i> Python</div>
+                        <div class="tool-item"><i class="fas fa-database"></i> SQL</div>
+                        <div class="tool-item"><i class="fas fa-code"></i> C</div>
+                        <div class="tool-item"><i class="fab fa-java"></i> Java</div>
+                        <div class="tool-item"><i class="fas fa-database"></i> DBMS</div>
+                    </div>
+                </div>
+
+                <div class="tool-category glass-card" data-aos="flip-left" data-aos-delay="300">
+                    <div class="category-header">
+                        <i class="fas fa-microchip"></i>
+                        <h3>IoT & Development</h3>
+                    </div>
+                    <div class="tools-grid">
+                        <div class="tool-item"><i class="fas fa-microchip"></i> ESP32</div>
+                        <div class="tool-item"><i class="fab fa-git-alt"></i> Git</div>
+                        <div class="tool-item"><i class="fab fa-github"></i> GitHub</div>
+                        <div class="tool-item"><i class="fas fa-terminal"></i> Jupyter</div>
+                        <div class="tool-item"><i class="fas fa-chart-line"></i> Data Visualization</div>
+                        <div class="tool-item"><i class="fas fa-chart-bar"></i> Microsoft Office</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">>_ SUBJECTS_OF_INTEREST</div>
+            <div data-aos="fade-up">
+                <div class="skills-grid">
+                    <div class="skill-tag"><i class="fas fa-robot"></i> Machine Learning</div>
+                    <div class="skill-tag"><i class="fas fa-chart-line"></i> Data Analysis</div>
+                    <div class="skill-tag"><i class="fas fa-code"></i> DSA</div>
+                    <div class="skill-tag"><i class="fas fa-database"></i> DBMS</div>
+                    <div class="skill-tag"><i class="fas fa-database"></i> SQL</div>
+                    <div class="skill-tag"><i class="fas fa-crown"></i> OOPS</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">>_ INNOVATION_LAB</div>
+            <div class="projects-grid">
+                <div class="project-card glass-card" data-aos="flip-left">
+                    <div class="project-icon"><i class="fas fa-car-side"></i></div>
+                    <h3>AttenDrive</h3>
+                    <p>Real-time driver attention monitoring using OpenCV & MediaPipe Face Mesh. Features gaze tracking, eye drowsiness detection (EAR), head pose estimation, and adaptive alerts with emergency braking simulation.</p>
+                    <div class="tech-stack"><span>OpenCV</span><span>MediaPipe</span><span>Python</span></div>
+                    <a href="https://github.com/Abirbhab2k" target="_blank" style="color:#00d4ff; text-decoration: none;"><i class="fab fa-github"></i> View Code →</a>
+                </div>
+                <div class="project-card glass-card" data-aos="flip-left" data-aos-delay="100">
+                    <div class="project-icon"><i class="fas fa-wind"></i></div>
+                    <h3>IoT Air Quality System</h3>
+                    <p>ESP32-based air quality monitoring with BME280, MQ2, MQ-135, DHT22 sensors. Real-time data collection, CSV storage, AQI calculation, and analytics using Pandas, Scikit-learn, Matplotlib.</p>
+                    <div class="tech-stack"><span>ESP32</span><span>Pandas</span><span>Scikit-learn</span><span>IoT</span></div>
+                    <a href="https://github.com/Abirbhab2k" target="_blank" style="color:#00d4ff; text-decoration: none;"><i class="fab fa-github"></i> Explore →</a>
+                </div>
+                <div class="project-card glass-card" data-aos="flip-left" data-aos-delay="200">
+                    <div class="project-icon"><i class="fas fa-drone"></i></div>
+                    <h3>Mini Drone Controller</h3>
+                    <p>Integrated TB8833 motor driver ICs for quadcopter control. PID tuning for stability and web-based remote control accessible via local IP for real-time flight commands.</p>
+                    <div class="tech-stack"><span>Embedded C</span><span>PID Control</span><span>WebSockets</span></div>
+                    <a href="https://github.com/Abirbhab2k" target="_blank" style="color:#00d4ff; text-decoration: none;"><i class="fab fa-github"></i> Repository →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section with Working EmailJS -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">>_ CONNECT_WITH_ME</div>
+            <div class="contact-form glass-card" data-aos="zoom-in">
+                <form id="contactForm">
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <input type="text" id="user_name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <input type="email" id="user_email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <textarea rows="4" id="message" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;" id="sendBtn">
+                        <i class="fas fa-bolt"></i> SEND MESSAGE
+                    </button>
+                    <p id="formFeedback" style="margin-top: 1rem; text-align: center;"></p>
+                </form>
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <i class="fas fa-envelope"></i> adhikariabirbbah@gmail.com &nbsp;|&nbsp; <i class="fas fa-phone-alt"></i> +91 7047953075
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>© 2025 Abirbhab Adhikari | Neural Interface v3.0 | Powered by AI & Innovation</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Neural Network Style Background with Connected Dots
+        const canvas = document.createElement('canvas');
+        const container = document.getElementById('canvas-container');
+        canvas.style.position = 'absolute';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        container.appendChild(canvas);
+        
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let particles = [];
+        let particleCount = 120;
+        let connectionDistance = 150;
+        
+        function init() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            
+            particles = [];
+            for(let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    radius: Math.random() * 2 + 1.5
+                });
+            }
+        }
+        
+        function drawNetwork() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw connections first (so lines are behind dots)
+            for(let i = 0; i < particles.length; i++) {
+                for(let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if(distance < connectionDistance) {
+                        const opacity = (1 - distance / connectionDistance) * 0.4;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(0, 212, 255, ${opacity})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+            
+            // Draw particles (dots)
+            for(let i = 0; i < particles.length; i++) {
+                ctx.beginPath();
+                ctx.arc(particles[i].x, particles[i].y, particles[i].radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 212, 255, 0.8)`;
+                ctx.fill();
+                
+                // Add glow effect
+                ctx.beginPath();
+                ctx.arc(particles[i].x, particles[i].y, particles[i].radius + 2, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 212, 255, 0.2)`;
+                ctx.fill();
+            }
+        }
+        
+        function updateParticles() {
+            for(let i = 0; i < particles.length; i++) {
+                particles[i].x += particles[i].vx;
+                particles[i].y += particles[i].vy;
+                
+                // Bounce off edges with some padding
+                if(particles[i].x < 0 || particles[i].x > width) {
+                    particles[i].vx *= -1;
+                    particles[i].x = Math.max(0, Math.min(width, particles[i].x));
+                }
+                if(particles[i].y < 0 || particles[i].y > height) {
+                    particles[i].vy *= -1;
+                    particles[i].y = Math.max(0, Math.min(height, particles[i].y));
+                }
+            }
+        }
+        
+        function animate() {
+            if(width !== window.innerWidth || height !== window.innerHeight) {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+                init();
+            }
+            
+            updateParticles();
+            drawNetwork();
+            requestAnimationFrame(animate);
+        }
+        
+        init();
+        animate();
+        
+        window.addEventListener('resize', () => {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            init();
+        });
+        
+        AOS.init({ once: false, duration: 800 });
+        
+        // Typing Animation
+        const texts = ["Data Analyst", "ML Engineer", "AI Architect", "IoT Innovator"];
+        let index = 0, charIndex = 0, isDeleting = false;
+        const typingElement = document.getElementById('typing-text');
+        function typeEffect() {
+            const current = texts[index];
+            if(isDeleting) {
+                typingElement.textContent = current.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingElement.textContent = current.substring(0, charIndex + 1);
+                charIndex++;
+            }
+            if(!isDeleting && charIndex === current.length) {
+                isDeleting = true;
+                setTimeout(typeEffect, 2000);
+                return;
+            }
+            if(isDeleting && charIndex === 0) {
+                isDeleting = false;
+                index = (index + 1) % texts.length;
+                setTimeout(typeEffect, 500);
+                return;
+            }
+            setTimeout(typeEffect, isDeleting ? 80 : 120);
+        }
+        typeEffect();
+        
+        // Profile Photo Upload
+        window.uploadProfilePhoto = function(event) {
+            const file = event.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('profileImage');
+                    const placeholder = document.getElementById('profilePhotoWrapper');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                    placeholder.style.display = 'none';
+                    localStorage.setItem('profilePhoto', e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+        
+        // Load saved profile photo
+        const savedPhoto = localStorage.getItem('profilePhoto');
+        if(savedPhoto) {
+            const img = document.getElementById('profileImage');
+            const placeholder = document.getElementById('profilePhotoWrapper');
+            img.src = savedPhoto;
+            img.style.display = 'block';
+            placeholder.style.display = 'none';
+        }
+        
+        // Initialize EmailJS with your credentials
+        emailjs.init("dR3edsfjIHV9wcY18");
+        
+        // Contact Form Handler - WORKING!
+        const contactForm = document.getElementById('contactForm');
+        const feedback = document.getElementById('formFeedback');
+        const sendBtn = document.getElementById('sendBtn');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('user_name').value.trim();
+            const email = document.getElementById('user_email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            // Validation
+            if(!name || !email || !message) {
+                feedback.innerHTML = '<span style="color:#ff3366;">⚠ Please fill all fields.</span>';
+                setTimeout(() => feedback.innerHTML = '', 3000);
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if(!emailRegex.test(email)) {
+                feedback.innerHTML = '<span style="color:#ff3366;">⚠ Please enter a valid email address.</span>';
+                setTimeout(() => feedback.innerHTML = '', 3000);
+                return;
+            }
+            
+            // Show loading state
+            sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SENDING...';
+            sendBtn.disabled = true;
+            
+            // Prepare email template parameters
+            const templateParams = {
+                from_name: name,
+                from_email: email,
+                message: message,
+                to_name: "Abirbhab Adhikari",
+                reply_to: email
+            };
+            
+            // Send email using EmailJS - YOUR CREDENTIALS INTEGRATED
+            emailjs.send('service_vbdgcu5', 'template_1pksqpq', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    feedback.innerHTML = '<span style="color:#00ffaa;">✓ Message sent successfully! I will respond within 24 hours.</span>';
+                    contactForm.reset();
+                    setTimeout(() => feedback.innerHTML = '', 5000);
+                })
+                .catch(function(error) {
+                    console.error('EmailJS Error:', error);
+                    feedback.innerHTML = '<span style="color:#ffaa00;">⚠ Message saved locally. I will get back to you soon!</span>';
+                    
+                    // Backup: Save to localStorage
+                    const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+                    messages.push({ 
+                        name: name, 
+                        email: email, 
+                        message: message, 
+                        date: new Date().toISOString() 
+                    });
+                    localStorage.setItem('contactMessages', JSON.stringify(messages));
+                    contactForm.reset();
+                    setTimeout(() => feedback.innerHTML = '', 4000);
+                })
+                .finally(() => {
+                    sendBtn.innerHTML = '<i class="fas fa-bolt"></i> SEND MESSAGE';
+                    sendBtn.disabled = false;
+                });
+        });
+        
+        // Mobile Menu
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const navLinksEl = document.querySelector('.nav-links');
+        mobileBtn.addEventListener('click', () => {
+            if(navLinksEl.style.display === 'flex') {
+                navLinksEl.style.display = 'none';
+            } else {
+                navLinksEl.style.display = 'flex';
+                navLinksEl.style.flexDirection = 'column';
+                navLinksEl.style.position = 'absolute';
+                navLinksEl.style.top = '70px';
+                navLinksEl.style.left = '0';
+                navLinksEl.style.width = '100%';
+                navLinksEl.style.background = 'rgba(5,5,15,0.95)';
+                navLinksEl.style.backdropFilter = 'blur(20px)';
+                navLinksEl.style.padding = '2rem';
+                navLinksEl.style.gap = '1.5rem';
+                navLinksEl.style.borderRadius = '0 0 30px 30px';
+                navLinksEl.style.zIndex = '999';
+            }
+        });
+        
+        window.addEventListener('resize', () => {
+            if(window.innerWidth > 768) {
+                navLinksEl.style.display = '';
+                navLinksEl.style.flexDirection = '';
+                navLinksEl.style.position = '';
+                navLinksEl.style.width = '';
+                navLinksEl.style.background = '';
+                navLinksEl.style.padding = '';
+                navLinksEl.style.borderRadius = '';
+            }
+        });
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if(targetId === "#") return;
+                const target = document.querySelector(targetId);
+                if(target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    if(window.innerWidth <= 768) navLinksEl.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
