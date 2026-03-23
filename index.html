@@ -219,33 +219,6 @@
             50% { transform: translateY(-15px); }
         }
 
-        .profile-photo-placeholder {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #00d4ff20, #7c3aed20);
-            border: 3px dashed #00d4ff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .profile-photo-placeholder i {
-            font-size: 4rem;
-            color: #00d4ff;
-            margin-bottom: 1rem;
-        }
-
-        .profile-photo-placeholder:hover {
-            border-color: #ff00d4;
-            transform: scale(1.02);
-        }
-
         /* Unique Open to Work Badge - Attached to Profile Photo */
         .open-to-work-badge {
             position: absolute;
@@ -558,10 +531,7 @@
             .profile-section {
                 order: 1;
             }
-            .social-icons {
-                justify-content: center;
-            }
-            .profile-photo, .profile-photo-placeholder {
+            .profile-photo {
                 width: 220px;
                 height: 220px;
             }
@@ -604,18 +574,13 @@
         </div>
     </nav>
 
-    <!-- Hero Section - Profile Photo with Unique Open to Work Badge -->
+    <!-- Hero Section - Profile Photo with Open to Work Badge (Static Image) -->
     <section id="home" class="hero">
         <div class="container hero-grid">
             <div class="profile-section" data-aos="fade-right" data-aos-duration="1000">
                 <div class="profile-photo-container">
-                    <div id="profilePhotoWrapper" class="profile-photo-placeholder" onclick="document.getElementById('photoUpload').click()">
-                        <i class="fas fa-camera"></i>
-                        <p>Click to upload<br>Profile Photo</p>
-                        <small style="font-size: 0.7rem;">Upload your photo</small>
-                    </div>
-                    <img id="profileImage" class="profile-photo" style="display: none;" alt="Profile Photo">
-                    <input type="file" id="photoUpload" accept="image/*" style="display: none;" onchange="uploadProfilePhoto(event)">
+                    <!-- STATIC PROFILE IMAGE - REPLACE 'profile.jpg' WITH YOUR IMAGE FILE NAME -->
+                    <img id="profileImage" class="profile-photo" src="profile.jpg" alt="Abirbhab Adhikari">
                     <!-- Unique Open to Work Badge Attached to Profile Photo -->
                     <div class="open-to-work-badge">
                         <i class="fas fa-circle"></i>
@@ -888,7 +853,6 @@
                 particles[i].x += particles[i].vx;
                 particles[i].y += particles[i].vy;
                 
-                // Bounce off edges with some padding
                 if(particles[i].x < 0 || particles[i].x > width) {
                     particles[i].vx *= -1;
                     particles[i].x = Math.max(0, Math.min(width, particles[i].x));
@@ -955,33 +919,6 @@
         }
         typeEffect();
         
-        // Profile Photo Upload
-        window.uploadProfilePhoto = function(event) {
-            const file = event.target.files[0];
-            if(file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.getElementById('profileImage');
-                    const placeholder = document.getElementById('profilePhotoWrapper');
-                    img.src = e.target.result;
-                    img.style.display = 'block';
-                    placeholder.style.display = 'none';
-                    localStorage.setItem('profilePhoto', e.target.result);
-                };
-                reader.readAsDataURL(file);
-            }
-        };
-        
-        // Load saved profile photo
-        const savedPhoto = localStorage.getItem('profilePhoto');
-        if(savedPhoto) {
-            const img = document.getElementById('profileImage');
-            const placeholder = document.getElementById('profilePhotoWrapper');
-            img.src = savedPhoto;
-            img.style.display = 'block';
-            placeholder.style.display = 'none';
-        }
-        
         // Initialize EmailJS with your credentials
         emailjs.init("dR3edsfjIHV9wcY18");
         
@@ -997,14 +934,12 @@
             const email = document.getElementById('user_email').value.trim();
             const message = document.getElementById('message').value.trim();
             
-            // Validation
             if(!name || !email || !message) {
                 feedback.innerHTML = '<span style="color:#ff3366;">⚠ Please fill all fields.</span>';
                 setTimeout(() => feedback.innerHTML = '', 3000);
                 return;
             }
             
-            // Email validation
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if(!emailRegex.test(email)) {
                 feedback.innerHTML = '<span style="color:#ff3366;">⚠ Please enter a valid email address.</span>';
@@ -1012,11 +947,9 @@
                 return;
             }
             
-            // Show loading state
             sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SENDING...';
             sendBtn.disabled = true;
             
-            // Prepare email template parameters
             const templateParams = {
                 from_name: name,
                 from_email: email,
@@ -1025,10 +958,8 @@
                 reply_to: email
             };
             
-            // Send email using EmailJS - YOUR CREDENTIALS INTEGRATED
             emailjs.send('service_vbdgcu5', 'template_1pksqpq', templateParams)
                 .then(function(response) {
-                    console.log('SUCCESS!', response.status, response.text);
                     feedback.innerHTML = '<span style="color:#00ffaa;">✓ Message sent successfully! I will respond within 24 hours.</span>';
                     contactForm.reset();
                     setTimeout(() => feedback.innerHTML = '', 5000);
@@ -1036,15 +967,8 @@
                 .catch(function(error) {
                     console.error('EmailJS Error:', error);
                     feedback.innerHTML = '<span style="color:#ffaa00;">⚠ Message saved locally. I will get back to you soon!</span>';
-                    
-                    // Backup: Save to localStorage
                     const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
-                    messages.push({ 
-                        name: name, 
-                        email: email, 
-                        message: message, 
-                        date: new Date().toISOString() 
-                    });
+                    messages.push({ name, email, message, date: new Date().toISOString() });
                     localStorage.setItem('contactMessages', JSON.stringify(messages));
                     contactForm.reset();
                     setTimeout(() => feedback.innerHTML = '', 4000);
