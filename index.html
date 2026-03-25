@@ -486,6 +486,21 @@
             font-size: 0.75rem;
         }
 
+        .project-link {
+            color: #00d4ff;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .project-link:hover {
+            color: #ff00d4;
+            transform: translateX(5px);
+        }
+
         /* Contact Form */
         .contact-form {
             max-width: 700px;
@@ -552,6 +567,9 @@
             }
             .hero {
                 padding-top: 100px;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -713,31 +731,45 @@
         </div>
     </section>
 
-    <!-- Projects Section -->
+    <!-- Projects Section with 4 Projects -->
     <section id="projects">
         <div class="container">
             <div class="section-title" data-aos="fade-up">>_ INNOVATION_LAB</div>
             <div class="projects-grid">
+                <!-- Project 1: AttenDrive -->
                 <div class="project-card glass-card" data-aos="flip-left">
                     <div class="project-icon"><i class="fas fa-car-side"></i></div>
                     <h3>AttenDrive</h3>
                     <p>Real-time driver attention monitoring using OpenCV & MediaPipe Face Mesh. Features gaze tracking, eye drowsiness detection (EAR), head pose estimation, and adaptive alerts with emergency braking simulation.</p>
                     <div class="tech-stack"><span>OpenCV</span><span>MediaPipe</span><span>Python</span></div>
-                    <a href="https://github.com/Abirbhab2k" target="_blank" style="color:#00d4ff; text-decoration: none;"><i class="fab fa-github"></i> View Code →</a>
+                    <a href="https://github.com/Abirbhab2k" target="_blank" class="project-link"><i class="fab fa-github"></i> View Code →</a>
                 </div>
+
+                <!-- Project 2: IoT Air Quality System -->
                 <div class="project-card glass-card" data-aos="flip-left" data-aos-delay="100">
                     <div class="project-icon"><i class="fas fa-wind"></i></div>
                     <h3>IoT Air Quality System</h3>
                     <p>ESP32-based air quality monitoring with BME280, MQ2, MQ-135, DHT22 sensors. Real-time data collection, CSV storage, AQI calculation, and analytics using Pandas, Scikit-learn, Matplotlib.</p>
                     <div class="tech-stack"><span>ESP32</span><span>Pandas</span><span>Scikit-learn</span><span>IoT</span></div>
-                    <a href="https://github.com/Abirbhab2k" target="_blank" style="color:#00d4ff; text-decoration: none;"><i class="fab fa-github"></i> Explore →</a>
+                    <a href="https://github.com/Abirbhab2k" target="_blank" class="project-link"><i class="fab fa-github"></i> Explore →</a>
                 </div>
+
+                <!-- Project 3: Mini Drone Controller -->
                 <div class="project-card glass-card" data-aos="flip-left" data-aos-delay="200">
                     <div class="project-icon"><i class="fas fa-drone"></i></div>
                     <h3>Mini Drone Controller</h3>
                     <p>Integrated TB8833 motor driver ICs for quadcopter control. PID tuning for stability and web-based remote control accessible via local IP for real-time flight commands.</p>
                     <div class="tech-stack"><span>Embedded C</span><span>PID Control</span><span>WebSockets</span></div>
-                    <a href="https://github.com/Abirbhab2k" target="_blank" style="color:#00d4ff; text-decoration: none;"><i class="fab fa-github"></i> Repository →</a>
+                    <a href="https://github.com/Abirbhab2k" target="_blank" class="project-link"><i class="fab fa-github"></i> Repository →</a>
+                </div>
+
+                <!-- Project 4: Hand Glove Detection - NEW PROJECT -->
+                <div class="project-card glass-card" data-aos="flip-left" data-aos-delay="300">
+                    <div class="project-icon"><i class="fas fa-hand-peace"></i></div>
+                    <h3>Hand Glove Detection</h3>
+                    <p>Computer vision-based hand gesture recognition system using OpenCV. Detects and classifies hand gestures with real-time processing, enabling touchless control and sign language interpretation.</p>
+                    <div class="tech-stack"><span>OpenCV</span><span>Python</span><span>Computer Vision</span><span>MediaPipe</span></div>
+                    <a href="https://github.com/Abirbhab2k/Open-CV-Project/tree/main/glove_detection" target="_blank" class="project-link"><i class="fab fa-github"></i> View Repository →</a>
                 </div>
             </div>
         </div>
